@@ -1,34 +1,15 @@
 'use strict';
 
-const express = require('express');
 const _       = require('lodash');
-const app     = express();
+const express = require('express');
+
+const cities  = require('./data/cities');
+const trips   = require('./data/trips');
+const flights = require('./data/flights');
+const flightsToTrips = require('./data/flightsToTrips');
+
 const PORT    = process.env.PORT || 4000;
-
-const cities = [
-  {id: 1, title: 'Odessa'},
-  {id: 2, title: 'Kiev'},
-  {id: 3, title: 'Lvov'},
-  {id: 4, title: 'Kharkov'},
-  {id: 5, title: 'Dniepr'},
-];
-
-const trips = [
-  {id: 1, from_id: 1, to_id: 3},
-  {id: 2, from_id: 1, to_id: 4},
-];
-
-const flights = [
-  {id: 1, from_id: 1, to_id: 2},
-  {id: 2, from_id: 2, to_id: 3},
-  {id: 3, from_id: 2, to_id: 4},
-  {id: 4, from_id: 2, to_id: 5},
-]
-
-const flightsToTrips = [
-  {id: 1, trip_id: 1, flights: [1, 2]},
-  {id: 2, trip_id: 2, flights: [1, 3]},
-];
+const app     = express();
 
 app.get('/cities', (req, res) => {
   res.json({

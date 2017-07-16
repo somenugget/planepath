@@ -19,7 +19,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-
 const mapDispatchToProps = () => ({});
 
 const SearchHeader = connect(
