@@ -1,0 +1,31 @@
+{
+  "folders":
+  [
+    {
+      "folder_exclude_patterns": [
+        "planepath/node_modules",
+        "planepath/dist",
+        "server/node_modules"
+      ],
+      "path": "."
+    }
+  ],
+  "syntax_override": {
+    "planepath\/[\/a-zA-Z]+.(js|jsx)$": ["Babel", "JavaScript (Babel)"]
+  },
+  "SublimeLinter": 
+  {
+    "linters": {
+      "eslint": {
+        "excludes": [
+          "planepath/node_modules/**", 
+          "planepath/dist/**",
+          "server/node_modules"
+        ]
+      },
+      "jshint": {
+        "@disable": true
+      }
+    }
+  },
+}

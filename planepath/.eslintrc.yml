@@ -1,0 +1,19 @@
+extends: airbnb
+plugins:
+  - react
+  - jsx-a11y
+  - import
+env:
+  browser: true
+globals:
+  axios: true
+rules:
+  react/jsx-filename-extension: 
+    - 1
+    - extensions: 
+      - .js
+      - .jsx
+  react/prefer-stateless-function:
+    - 0
+  react/prop-types: 
+    - 0
