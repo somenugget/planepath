@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Grid } from 'semantic-ui-react';
 
 import 'semantic-ui-css/semantic.min.css';
 
-import CityInput from './containers/CityInput';
+import PathInputRow from './components/PathInputRow';
 import SearchHeader from './containers/SearchHeader';
 import Trips from './containers/Trips';
 
-class App extends Component {
+class App extends React.Component {
   render() {
     return (
       <div className="main-container">
@@ -17,14 +17,9 @@ class App extends Component {
               <SearchHeader />
             </Grid.Column>
           </Grid.Row>
-          <Grid.Row columns={2}>
-            <Grid.Column>
-              <CityInput direction="from" />
-            </Grid.Column>
-            <Grid.Column>
-              <CityInput direction="to" />
-            </Grid.Column>
-          </Grid.Row>
+
+          <PathInputRow />
+
           <Grid.Row>
             <Grid.Column>
               <Trips />

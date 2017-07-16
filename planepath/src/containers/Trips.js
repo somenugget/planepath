@@ -1,12 +1,11 @@
-import _ from 'lodash';
 import { connect } from 'react-redux';
 import TripsList from '../components/TripsList';
 
-const mapStateToProps = (state) => {
-  return {
+const mapStateToProps = state => (
+  {
     trips: state.trips.items,
-  };
-};
+  }
+);
 
 const mapDispatchToProps = () => ({});
 

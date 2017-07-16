@@ -9,7 +9,7 @@ import rootReducer from './reducers';
 import { fetchCities } from './actions/cities';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
-import './App.css';
+import './style/App.css';
 
 const store = createStore(
   rootReducer,
