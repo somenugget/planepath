@@ -15,7 +15,7 @@ const user = (state = {
         tryingToLogIn: false,
         isAuthenticated: true,
       };
-    case 'LOGGED_OUT':
+    case 'LOG_OUT':
       return {
         ...state,
         isAuthenticated: false,

@@ -1,11 +1,9 @@
 import { connect } from 'react-redux';
 import Menu from '../components/Menu';
 
-const mapStateToProps = (state) => {
-  return {
-    user: state.user,
-  };
-};
+const mapStateToProps = state => ({
+  user: state.user,
+});
 
 const mapDispatchToProps = () => ({});
 

@@ -14,7 +14,7 @@ const Menu = ({ user }) => {
         <Dropdown item icon="user">
           <Dropdown.Menu>
             <Dropdown.Item>Statistics</Dropdown.Item>
-            <Dropdown.Item>Log out</Dropdown.Item>
+            <Dropdown.Item as={Link} to="/logout">Log out</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       </SMenu.Menu>

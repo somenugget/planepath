@@ -20,7 +20,7 @@ const initialState = {
   },
 };
 
-const user = window.localStorage.getItem('user');
+const user = JSON.parse(window.localStorage.getItem('user'));
 if (user) {
   initialState.user.isAuthenticated = true;
   initialState.user.user = JSON.parse(user);
