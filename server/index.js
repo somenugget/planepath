@@ -1,8 +1,10 @@
 'use strict';
 
-const _       = require('lodash');
-const express = require('express');
+const _          = require('lodash');
+const express    = require('express');
+const bodyParser = require('body-parser');
 
+const users   = require('./data/users');
 const cities  = require('./data/cities');
 const trips   = require('./data/trips');
 const flights = require('./data/flights');
@@ -10,6 +12,8 @@ const flightsToTrips = require('./data/flightsToTrips');
 
 const PORT    = process.env.PORT || 4000;
 const app     = express();
+
+app.use(bodyParser.json());
 
 app.get('/cities', (req, res) => {
   res.json({
@@ -23,6 +27,7 @@ app.get('/trips/:from/:to', (req, res) => {
 
   if (!from || !to) {
     res.status(404).send({error: 'Cities not found!'});
+    return;
   }
 
   let tripsFound = _.filter(trips, {
@@ -46,6 +51,21 @@ app.get('/trips/:from/:to', (req, res) => {
 
   res.json({
     data: tripsFound,
+  });
+});
+
+app.post('/sessions', (req, res) => {
+  let user = _.find(users, {username: req.body.username, password: req.body.password});
+
+  if (!user) {
+    res.status(401).send({error: 'Wrong username or password!'});
+    return;
+  }
+
+  delete user.password;
+
+  res.json({
+    data: user,
   });
 });
 

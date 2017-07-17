@@ -22,7 +22,13 @@ export function logIn(username, password) {
     dispatch(tryToLogIn());
     const state = getState();
     console.log(state);
-    fetch('/session', { method: 'POST', body: { username, password } })
+    fetch('/sessions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ username, password }),
+    })
       .then(response => response.json())
       .then(json => console.log(json));
   };

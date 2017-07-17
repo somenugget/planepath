@@ -4,7 +4,7 @@ import { Button, Form } from 'semantic-ui-react';
 const LoginForm = ({ tryingToLogIn, onSubmit }) => {
   let usernameInput;
   let passwordInput;
-
+  tryingToLogIn = false;
   const formSubmit = (e) => {
     e.preventDefault();
     onSubmit(usernameInput.value, passwordInput.value);
@@ -31,7 +31,7 @@ const LoginForm = ({ tryingToLogIn, onSubmit }) => {
         />
       </Form.Field>
       <Form.Field>
-        <Button type="submit" color="blue" fluid>Submit</Button>
+        <Button type="submit" color="blue" fluid disabled={tryingToLogIn}>Submit</Button>
       </Form.Field>
     </Form>
   );
