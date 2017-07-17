@@ -1,32 +1,23 @@
 import React from 'react';
-import { Grid } from 'semantic-ui-react';
+import { BrowserRouter, Route } from 'react-router-dom';
 
 import 'semantic-ui-css/semantic.min.css';
 
-import PathInputRow from './components/PathInputRow';
-import SearchHeader from './containers/SearchHeader';
-import Trips from './containers/Trips';
+import Menu from './components/Menu';
+import Trips from './components/pages/Trips';
+import Login from './components/pages/Login';
 
 class App extends React.Component {
   render() {
     return (
-      <div className="main-container">
-        <Grid container>
-          <Grid.Row>
-            <Grid.Column>
-              <SearchHeader />
-            </Grid.Column>
-          </Grid.Row>
+      <BrowserRouter>
+        <div className="main-container">
+          <Menu />
 
-          <PathInputRow />
-
-          <Grid.Row>
-            <Grid.Column>
-              <Trips />
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
-      </div>
+          <Route exact path="/" component={Trips} />
+          <Route path="/login" component={Login} />
+        </div>
+      </BrowserRouter>
     );
   }
 }
