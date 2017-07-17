@@ -62,10 +62,12 @@ app.post('/sessions', (req, res) => {
     return;
   }
 
-  delete user.password;
-
   res.json({
-    data: user,
+    data: {
+      id: user.id,
+      username: user.username,
+      token: user.token,
+    },
   });
 });
 

@@ -1,9 +1,9 @@
 import React from 'react';
 import { Grid } from 'semantic-ui-react';
 
-import PathInputRow from '../PathInputRow';
-import SearchHeader from '../../containers/SearchHeader';
-import TripsTable from '../../containers/TripsTable';
+import PathInputRow from '../components/PathInputRow';
+import SearchHeader from '../containers/SearchHeader';
+import TripsTable from '../containers/TripsTable';
 
 class Trips extends React.Component {
   render() {

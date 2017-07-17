@@ -6,10 +6,9 @@ const mapStateToProps = state => ({
   tryingToLogIn: state.user.tryingToLogIn,
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch, ownProps) => ({
   onSubmit: (username, password) => {
-    console.log(username, password);
-    dispatch(logIn(username, password));
+    dispatch(logIn(username, password, ownProps.history));
   },
 });
 

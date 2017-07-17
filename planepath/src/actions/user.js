@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export function tryToLogIn() {
   return {
     type: 'TRYING_TO_LOG_IN',
@@ -17,19 +19,22 @@ export function loggedOut() {
   };
 }
 
-export function logIn(username, password) {
-  return (dispatch, getState) => {
+export function logInFailed(error) {
+  return {
+    type: 'LOGIN_FAILED',
+    error,
+  };
+}
+
+export function logIn(username, password, history) {
+  return (dispatch) => {
     dispatch(tryToLogIn());
-    const state = getState();
-    console.log(state);
-    fetch('/sessions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ username, password }),
-    })
-      .then(response => response.json())
-      .then(json => console.log(json));
+
+    axios.post('/sessions', { username, password }, { headers: { 'Content-Type': 'application/json' } })
+      .then((response) => {
+        dispatch(loggedIn(response.data.data));
+        history.push('/');
+      })
+      .catch(error => dispatch(logInFailed(error.response.data.error)));
   };
 }
