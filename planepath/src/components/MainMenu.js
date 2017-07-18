@@ -4,7 +4,7 @@ import { Grid, Dropdown, Menu } from 'semantic-ui-react';
 
 const MainMenu = ({ user }) => {
   let rightPanel;
-
+  let flightsLink;
   if (user.isAuthenticated) {
     rightPanel = (
       <Menu.Menu position="right">
@@ -29,6 +29,16 @@ const MainMenu = ({ user }) => {
     );
   }
 
+  if (user.user && user.user.role === 'organisation') {
+    flightsLink = (
+      <Menu.Item as={Link} to="/flights">
+        Flights
+      </Menu.Item>
+    );
+  } else {
+    flightsLink = null;
+  }
+
   return (
     <Grid container>
       <Grid.Row>
@@ -37,9 +47,7 @@ const MainMenu = ({ user }) => {
             <Menu.Item as={Link} to="/">
               Trips
             </Menu.Item>
-            <Menu.Item as={Link} to="/flights">
-              Flights
-            </Menu.Item>
+            { flightsLink }
 
             { rightPanel }
           </Menu>
