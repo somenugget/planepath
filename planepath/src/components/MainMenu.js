@@ -1,31 +1,31 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Grid, Dropdown, Menu as SMenu } from 'semantic-ui-react';
+import { Grid, Dropdown, Menu } from 'semantic-ui-react';
 
-const Menu = ({ user }) => {
+const MainMenu = ({ user }) => {
   let rightPanel;
 
   if (user.isAuthenticated) {
     rightPanel = (
-      <SMenu.Menu position="right">
-        <SMenu.Item>
+      <Menu.Menu position="right">
+        <Menu.Item>
           Hello, {user.user.username}
-        </SMenu.Item>
+        </Menu.Item>
         <Dropdown item icon="user">
           <Dropdown.Menu>
             <Dropdown.Item>Statistics</Dropdown.Item>
             <Dropdown.Item as={Link} to="/logout">Log out</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
-      </SMenu.Menu>
+      </Menu.Menu>
     );
   } else {
     rightPanel = (
-      <SMenu.Menu position="right">
-        <SMenu.Item as={Link} to="/login">
+      <Menu.Menu position="right">
+        <Menu.Item as={Link} to="/login">
           Login
-        </SMenu.Item>
-      </SMenu.Menu>
+        </Menu.Item>
+      </Menu.Menu>
     );
   }
 
@@ -33,16 +33,20 @@ const Menu = ({ user }) => {
     <Grid container>
       <Grid.Row>
         <Grid.Column>
-          <SMenu color="blue" inverted>
-            <SMenu.Item as={Link} to="/">
+          <Menu color="blue" inverted>
+            <Menu.Item as={Link} to="/">
               Trips
-            </SMenu.Item>
+            </Menu.Item>
+            <Menu.Item as={Link} to="/flights">
+              Flights
+            </Menu.Item>
+
             { rightPanel }
-          </SMenu>
+          </Menu>
         </Grid.Column>
       </Grid.Row>
     </Grid>
   );
 };
 
-export default Menu;
+export default MainMenu;

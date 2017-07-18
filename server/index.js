@@ -67,6 +67,7 @@ app.post('/sessions', (req, res) => {
       id: user.id,
       username: user.username,
       token: user.token,
+      role: user.role,
     },
   });
 });

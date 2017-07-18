@@ -19,6 +19,7 @@ const user = (state = {
       return {
         ...state,
         isAuthenticated: false,
+        user: null,
       };
     default:
       return state;

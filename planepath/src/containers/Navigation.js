@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import Menu from '../components/Menu';
+import MainMenu from '../components/MainMenu';
 
 const mapStateToProps = state => ({
   user: state.user,
@@ -10,6 +10,6 @@ const mapDispatchToProps = () => ({});
 const Navigation = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(Menu);
+)(MainMenu);
 
 export default Navigation;
