@@ -23,7 +23,7 @@ const initialState = {
 const user = JSON.parse(window.localStorage.getItem('user'));
 if (user) {
   initialState.user.isAuthenticated = true;
-  initialState.user.user = JSON.parse(user);
+  initialState.user.user = user;
 }
 
 const store = createStore(
