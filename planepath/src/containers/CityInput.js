@@ -5,7 +5,7 @@ import { setCityAndFindTrips } from '../actions/city';
 const mapStateToProps = state => (
   {
     loading: state.cities.isFetching,
-    results: state.cities.items,
+    results: state.cities.items.map(item => ({ id: item.id, title: item.title })),
   }
 );
 

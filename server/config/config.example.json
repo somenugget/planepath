@@ -1,0 +1,37 @@
+{
+  "development": {
+    "username": "",
+    "password": "",
+    "database": "",
+    "host": "",
+    "dialect": "",
+    "define": {
+      "timestamps": true,
+      "createdAt": "created_at",
+      "updatedAt": "updated_at",
+    }
+  },
+  "test": {
+    "username": "",
+    "password": "",
+    "database": "",
+    "host": "",
+    "dialect": "",
+    "define": {
+      "timestamps": true,
+      "createdAt": "created_at",
+      "updatedAt": "updated_at",
+    }
+  },
+  "production": {
+    "username": "",
+    "password": "",
+    "database": "",
+    "host": "",
+    "dialect": "",
+    "define": {
+      "timestamps": true,
+      "createdAt": "created_at",
+      "updatedAt": "updated_at",
+    }
+}
