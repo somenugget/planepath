@@ -2,24 +2,21 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import NotAllowed from '../pages/NotAllowed';
+import Loading from '../pages/Loading';
+import { checkAccess } from '../actions/access';
 
 const Authorization = (WrappedComponent, allowedRoles) => {
   class WithAuthorization extends React.Component {
-    constructor(props) {
-      super(props);
-      this.isAllowed = this.isAllowed.bind(this);
-    }
-
-    isAllowed() {
-      if (!this.props.user) {
-        return false;
-      }
-
-      return allowedRoles.includes(this.props.user.role);
+    componentWillMount() {
+      this.props.checkAccess(this.props.user.token, this.props.user.role);
     }
 
     render() {
-      if (this.isAllowed()) {
+      if (this.props.access.tryingToCheckAccess) {
+        return <Loading />;
+      }
+
+      if (this.props.access.accessAllowed && allowedRoles.includes(this.props.user.role)) {
         return <WrappedComponent {...this.props} />;
       }
 
@@ -29,9 +26,14 @@ const Authorization = (WrappedComponent, allowedRoles) => {
 
   const mapStateToProps = state => ({
     user: state.user.user,
+    access: state.access,
   });
 
-  return connect(mapStateToProps)(WithAuthorization);
+  const mapDispatchToProps = dispatch => ({
+    checkAccess: (token, role) => dispatch(checkAccess(token, role)),
+  });
+
+  return connect(mapStateToProps, mapDispatchToProps)(WithAuthorization);
 };
 
 export default Authorization;
