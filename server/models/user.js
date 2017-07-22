@@ -7,7 +7,9 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   User.associate = (models) => {
-    User.hasMany(models.Flight);
+    User.hasMany(models.Flight, {
+      foreignKey: 'creator_id',
+    });
   };
 
   return User;
