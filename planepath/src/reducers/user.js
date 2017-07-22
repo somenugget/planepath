@@ -1,29 +1,25 @@
-const user = (state = {
-  isAuthenticated: false,
-  tryingToLogIn: false,
-  user: null,
-}, action) => {
-  switch (action.type) {
-    case 'TRYING_TO_LOG_IN':
-      return {
-        ...state,
-        tryingToLogIn: true,
-      };
-    case 'LOGGED_IN':
-      return {
-        user: action.user,
-        tryingToLogIn: false,
-        isAuthenticated: true,
-      };
-    case 'LOG_OUT':
-      return {
-        ...state,
-        isAuthenticated: false,
-        user: null,
-      };
-    default:
-      return state;
-  }
-};
+import { handleActions } from 'redux-actions';
+
+const user = handleActions({
+  TRYING_TO_LOG_IN: () => ({
+    tryingToLogIn: true,
+  }),
+
+  LOGGED_IN: (state, action) => ({
+    user: action.payload.user,
+    tryingToLogIn: false,
+    isAuthenticated: true,
+  }),
+
+  LOG_OUT: () => ({
+    isAuthenticated: false,
+    user: null,
+  }),
+
+  LOGIN_FAILED: () => ({
+    isAuthenticated: false,
+    user: null,
+  }),
+}, { isAuthenticated: false, tryingToLogIn: false, user: null });
 
 export default user;

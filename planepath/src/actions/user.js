@@ -1,30 +1,10 @@
 import axios from 'axios';
+import { createAction } from 'redux-actions';
 
-export function tryToLogIn() {
-  return {
-    type: 'TRYING_TO_LOG_IN',
-  };
-}
-
-export function loggedIn(user) {
-  return {
-    type: 'LOGGED_IN',
-    user,
-  };
-}
-
-export function logOut() {
-  return {
-    type: 'LOG_OUT',
-  };
-}
-
-export function logInFailed(error) {
-  return {
-    type: 'LOGIN_FAILED',
-    error,
-  };
-}
+export const tryToLogIn = createAction('TRYING_TO_LOG_IN');
+export const loggedIn = createAction('LOGGED_IN', user => ({ user }));
+export const logOut = createAction('LOG_OUT');
+export const logInFailed = createAction('LOGIN_FAILED', error => ({ error }));
 
 export function logIn(username, password, history) {
   return (dispatch) => {
@@ -35,6 +15,8 @@ export function logIn(username, password, history) {
         dispatch(loggedIn(response.data.data));
         history.push('/');
       })
-      .catch(error => dispatch(logInFailed(error.response.data.error)));
+      .catch((error) => {
+        dispatch(logInFailed(error.response.data.error));
+      });
   };
 }

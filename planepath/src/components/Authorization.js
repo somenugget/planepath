@@ -3,12 +3,16 @@ import { connect } from 'react-redux';
 
 import NotAllowed from '../pages/NotAllowed';
 import Loading from '../pages/Loading';
-import { checkAccess } from '../actions/access';
+import { checkAccess, accessDenied } from '../actions/access';
 
 const Authorization = (WrappedComponent, allowedRoles) => {
   class WithAuthorization extends React.Component {
     componentWillMount() {
-      this.props.checkAccess(this.props.user.token, this.props.user.role);
+      if (this.props.user) {
+        this.props.checkAccess(this.props.user.token, this.props.user.role);
+      } else {
+        this.props.accessDenied();
+      }
     }
 
     render() {
@@ -31,6 +35,7 @@ const Authorization = (WrappedComponent, allowedRoles) => {
 
   const mapDispatchToProps = dispatch => ({
     checkAccess: (token, role) => dispatch(checkAccess(token, role)),
+    accessDenied: () => dispatch(accessDenied()),
   });
 
   return connect(mapStateToProps, mapDispatchToProps)(WithAuthorization);
