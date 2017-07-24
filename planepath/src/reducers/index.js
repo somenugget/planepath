@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import { reducer as formReducer } from 'redux-form';
 import cities from './cities';
 import city from './city';
 import trips from './trips';
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   user,
   access,
   flights,
+  form: formReducer,
 });
 
 export default rootReducer;

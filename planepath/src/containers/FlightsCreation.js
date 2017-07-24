@@ -2,14 +2,36 @@ import { connect } from 'react-redux';
 import { createFlight } from '../actions/flights';
 import FlightsCreationForm from '../components/FlightsCreationForm';
 
-const mapStateToProps = state => ({
-  cities: state.cities.items.map(item => ({ id: item.id, title: item.title })),
-  user: state.user.user,
-});
+const mapStateToProps = (state) => {
+  const errors = {};
+  if (state.form.flight && state.form.flight.syncErrors && state.form.flight.fields) {
+    const { syncErrors, fields } = state.form.flight;
+    Object.keys(syncErrors).forEach((key) => {
+      if (fields[key] && fields[key].touched) {
+        errors[key] = syncErrors[key];
+      }
+    });
+  }
 
-const mapDispatchToProps = dispatch => ({
-  onSubmit: (token, fromId, toId, code, departure, duration, cost) => {
-    dispatch(createFlight(token, fromId, toId, code, departure, duration, cost));
+  return {
+    cities: state.cities.items.map(item => ({ id: item.id, title: item.title })),
+    user: state.user.user,
+    errors,
+  };
+};
+
+const mapDispatchToProps = () => ({
+  onSubmit: (values, dispatch, props) => {
+    dispatch(createFlight({
+      ...values,
+      to_id: values.to,
+      from_id: values.from,
+      code: values.code,
+      departure: values.departure,
+      duration: values.duration,
+      cost: values.cost,
+      token: props.user.token,
+    }));
   },
 });
 

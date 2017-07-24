@@ -19,28 +19,21 @@ export const flightCreationStart = createAction('FLIGHT_CREATION_START');
 export const flightCreationSuccess = createAction('FLIGHT_CREATION_SUCCESS', flight => ({ flight }));
 export const flightCreationError = createAction('FLIGHT_CREATION_ERROR', error => ({ error }));
 
-export function createFlight(token, fromId, toId, code, departure, duration, cost) {
+export function createFlight(values) {
   return (dispatch) => {
     dispatch(flightCreationStart());
 
-    axios.post('/flights', {
-      from_id: fromId,
-      to_id: toId,
-      token,
-      code,
-      departure,
-      duration,
-      cost,
-    })
-    .then((response) => {
-      dispatch(flightCreationSuccess(response.data.data));
-    })
-    .catch((error) => {
-      console.error(error);
-      if (error.response) {
-        console.log(error.response);
-        dispatch(flightCreationError(error.response.error));
-      }
-    });
+    axios
+      .post('/flights', values)
+      .then((response) => {
+        dispatch(flightCreationSuccess(response.data.data));
+      })
+      .catch((error) => {
+        console.error(error);
+        if (error.response) {
+          console.log(error.response);
+          dispatch(flightCreationError(error.response.error));
+        }
+      });
   };
 }
