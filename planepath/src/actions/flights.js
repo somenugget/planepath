@@ -39,19 +39,19 @@ export function createFlight(values) {
   };
 }
 
+export const setUpdatingFlight = createAction('SET_UPDATING_FLIGHT', flightId => ({ flightId }));
+export const unsetUpdatingFlight = createAction('UNSET_UPDATING_FLIGHT');
+
 export const flightUpdateStart = createAction('FLIGHT_UPDATE_START');
 export const flightUpdateSuccess = createAction('FLIGHT_UPDATE_SUCCESS', flight => ({ flight }));
 export const flightUpdateError = createAction('FLIGHT_UPDATE_ERROR', error => ({ error }));
 
-export function updateFlight(flightId, token, values) {
+export function updateFlight(flightId, values) {
   return (dispatch) => {
     dispatch(flightUpdateStart());
 
     axios
-      .put(`/flights/${flightId}`, {
-        ...values,
-        token,
-      })
+      .put(`/flights/${flightId}`, values)
       .then((response) => {
         dispatch(flightUpdateSuccess(response.data.data));
       })

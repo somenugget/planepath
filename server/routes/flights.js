@@ -18,7 +18,7 @@ router.post('/', function (req, res) {
     if (user) {
       models.Flight.create({
         from_id: req.body.from_id,
-        to_id: req.body.from_id,
+        to_id: req.body.to_id,
         creator_id: user.id,
         code: req.body.code,
         active: req.body.active,

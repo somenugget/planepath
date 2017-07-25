@@ -1,8 +1,7 @@
 import React from 'react';
 import { Table, Button, Checkbox } from 'semantic-ui-react';
 
-
-const FlightsList = ({ flights, updateFlight }) => {
+const FlightsList = ({ flights, updateFlight, setUpdatingFlight }) => {
   if (!flights.length) {
     return <h4>You have no flights added</h4>;
   }
@@ -40,7 +39,7 @@ const FlightsList = ({ flights, updateFlight }) => {
             </Table.Cell>
             <Table.Cell>
               <Button.Group>
-                <Button color="green">Edit</Button>
+                <Button color="green" onClick={() => setUpdatingFlight(flight.id)}>Edit</Button>
                 <Button color="red">Remove</Button>
               </Button.Group>
             </Table.Cell>

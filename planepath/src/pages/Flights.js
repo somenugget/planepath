@@ -3,9 +3,9 @@ import _ from 'lodash';
 import { connect } from 'react-redux';
 import { Grid, Divider } from 'semantic-ui-react';
 import Loading from './Loading';
-import { loadFlights, updateFlight } from '../actions/flights';
+import { loadFlights, updateFlight, setUpdatingFlight } from '../actions/flights';
 import FlightsList from '../components/FlightsList';
-import FlightsCreation from '../containers/FlightsCreation';
+import FlightForm from '../containers/FlightForm';
 
 class Flights extends React.Component {
   constructor(props) {
@@ -20,9 +20,13 @@ class Flights extends React.Component {
   renderFlights() {
     return (
       <div className="ui column">
-        <FlightsCreation />
+        <FlightForm />
         <Divider />
-        <FlightsList flights={this.props.flights} updateFlight={this.props.updateFlight} />
+        <FlightsList
+          flights={this.props.flights}
+          updateFlight={this.props.updateFlight}
+          setUpdatingFlight={this.props.setUpdatingFlight}
+        />
       </div>
     );
   }
@@ -47,7 +51,10 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   loadFlights: () => dispatch(loadFlights(ownProps.user.id)),
-  updateFlight: (flightId, values) => dispatch(updateFlight(flightId, ownProps.user.token, values)),
+  updateFlight: (flightId, values) => {
+    dispatch(updateFlight(flightId, { ...values, token: ownProps.user.token }));
+  },
+  setUpdatingFlight: flightId => dispatch(setUpdatingFlight(flightId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Flights);

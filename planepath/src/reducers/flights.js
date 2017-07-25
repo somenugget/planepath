@@ -7,8 +7,14 @@ const flights = handleActions({
   }),
 
   FLIGHTS_LOADED: (state, action) => ({
+    ...state,
     items: action.payload.items,
     isFetching: false,
+  }),
+
+  FLIGHT_CREATION_SUCCESS: (state, action) => ({
+    ...state,
+    items: [action.payload.flight, ...state.items],
   }),
 
   FLIGHT_UPDATE_SUCCESS: (state, action) => ({
@@ -22,6 +28,16 @@ const flights = handleActions({
     }),
   }),
 
-}, { isFetching: false, items: [] });
+  SET_UPDATING_FLIGHT: (state, action) => ({
+    ...state,
+    updatingFlight: action.payload.flightId,
+  }),
+
+  UNSET_UPDATING_FLIGHT: state => ({
+    ...state,
+    updatingFlight: null,
+  }),
+
+}, { isFetching: false, updatingFlight: null, items: [] });
 
 export default flights;

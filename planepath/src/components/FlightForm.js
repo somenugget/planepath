@@ -1,69 +1,9 @@
-import React from 'react';
 import _ from 'lodash';
-import { Button, Form, Search, Message, Checkbox } from 'semantic-ui-react';
+import React from 'react';
+import { Button, Form, Message } from 'semantic-ui-react';
 import { Field, reduxForm } from 'redux-form';
 import { validate } from '../validations/flight';
-
-const renderField = ({
-  meta: { touched, error },
-  required,
-  input,
-  label,
-  width,
-  type,
-  min,
-  id,
-}) => (
-  <Form.Field required={required} error={touched && !!error} width={width}>
-    <label htmlFor={id}>{label}</label>
-    <input
-      {...input}
-      id={id}
-      min={min}
-      type={type}
-      placeholder={label}
-    />
-  </Form.Field>
-);
-
-const renderCheckbox = ({
-  input: { onChange },
-  required,
-  value,
-  label,
-  name,
-  id,
-}) => (
-  <Form.Field required={required}>
-    <label htmlFor={id}>{label}</label>
-    <Checkbox
-      id={id}
-      name={name}
-      value={value}
-      onChange={(e, data) => { onChange(data.checked); }}
-    />
-  </Form.Field>
-);
-
-const renderSelect = ({
-  input: { onChange, onBlur },
-  meta: { touched, error },
-  required,
-  results,
-  label,
-  name,
-  id,
-}) => (
-  <Form.Field required={required} error={touched && !!error}>
-    <label htmlFor={id}>{label}</label>
-    <Search
-      id={id}
-      results={results}
-      name={name}
-      onResultSelect={(e, data) => { onChange(data.result.id); onBlur(); }}
-    />
-  </Form.Field>
-);
+import { renderField, renderCheckbox, renderSelect } from './formFields';
 
 const renderFirstError = (errors) => {
   if (!errors) {
@@ -79,10 +19,15 @@ const renderFirstError = (errors) => {
   return <Message color="red" size="mini" header={`${_.capitalize(firstErrorKey)}: ${errors[firstErrorKey]}`} />;
 };
 
-class FlightsCreationForm extends React.Component {
+class FlightForm extends React.Component {
   render() {
+    const { updatingFlight, unsetUpdatingFlight, cities, handleSubmit, errors } = this.props;
+
     return (
-      <Form onSubmit={this.props.handleSubmit} name="flight">
+      <Form onSubmit={handleSubmit} name="flight">
+        <h3>
+          {updatingFlight ? `Update a flight №${updatingFlight}` : 'Create a new flight'}
+        </h3>
         <Form.Group widths="equal">
           <Field
             component={renderSelect}
@@ -90,7 +35,7 @@ class FlightsCreationForm extends React.Component {
             id="from"
             name="from"
             label="From"
-            results={this.props.cities}
+            results={cities}
           />
           <Field
             component={renderSelect}
@@ -98,7 +43,7 @@ class FlightsCreationForm extends React.Component {
             id="to"
             name="to"
             label="To"
-            results={this.props.cities}
+            results={cities}
           />
         </Form.Group>
         <Form.Group>
@@ -150,11 +95,14 @@ class FlightsCreationForm extends React.Component {
           />
         </Form.Group>
         <Form.Group>
-          <Form.Field width="2">
-            <Button type="submit" color="blue" fluid>Create</Button>
+          <Form.Field width="4">
+            <Button type="submit" color={updatingFlight ? 'green' : 'blue'}>
+              {updatingFlight ? 'Update' : 'Create'}
+            </Button>
+            {updatingFlight ? <Button onClick={unsetUpdatingFlight}>Cancel</Button> : null}
           </Form.Field>
-          <Form.Field width="14">
-            {this.props.anyTouched && renderFirstError(this.props.errors)}
+          <Form.Field width="12">
+            {this.props.anyTouched && renderFirstError(errors)}
           </Form.Field>
         </Form.Group>
       </Form>
@@ -164,5 +112,6 @@ class FlightsCreationForm extends React.Component {
 
 export default reduxForm({
   form: 'flight',
+  enableReinitialize: true,
   validate,
-})(FlightsCreationForm);
+})(FlightForm);
