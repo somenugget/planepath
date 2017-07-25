@@ -3,7 +3,8 @@ module.exports = (sequelize, DataTypes) => {
     code: DataTypes.STRING,
     departure: DataTypes.TIME,
     duration: DataTypes.INTEGER,
-    cost: DataTypes.INTEGER
+    cost: DataTypes.INTEGER,
+    active: DataTypes.BOOLEAN
   });
 
   Flight.associate = (models) => {

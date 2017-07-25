@@ -4,7 +4,7 @@ const models = require('../models');
 
 router.get('/', function (req, res) {
   const filter = JSON.parse(req.query.filter);
-  console.log(filter);
+
   queryFilter = filter.user_id ? {creator_id: filter.user_id} : {};
   models.Flight.findAll({ where: queryFilter }).then((flights) => {
     res.json({
@@ -21,6 +21,7 @@ router.post('/', function (req, res) {
         to_id: req.body.from_id,
         creator_id: user.id,
         code: req.body.code,
+        active: req.body.active,
         departure: req.body.departure,
         duration: req.body.duration,
         cost: req.body.cost,

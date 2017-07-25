@@ -1,11 +1,20 @@
 import React from 'react';
 import _ from 'lodash';
-import { Button, Form, Search, Message } from 'semantic-ui-react';
+import { Button, Form, Search, Message, Checkbox } from 'semantic-ui-react';
 import { Field, reduxForm } from 'redux-form';
 import { validate } from '../validations/flight';
 
-const renderField = ({ id, required, input, min, label, type, meta: { touched, error } }) => (
-  <Form.Field required={required} error={touched && !!error}>
+const renderField = ({
+  meta: { touched, error },
+  required,
+  input,
+  label,
+  width,
+  type,
+  min,
+  id,
+}) => (
+  <Form.Field required={required} error={touched && !!error} width={width}>
     <label htmlFor={id}>{label}</label>
     <input
       {...input}
@@ -13,6 +22,25 @@ const renderField = ({ id, required, input, min, label, type, meta: { touched, e
       min={min}
       type={type}
       placeholder={label}
+    />
+  </Form.Field>
+);
+
+const renderCheckbox = ({
+  input: { onChange },
+  required,
+  value,
+  label,
+  name,
+  id,
+}) => (
+  <Form.Field required={required}>
+    <label htmlFor={id}>{label}</label>
+    <Checkbox
+      id={id}
+      name={name}
+      value={value}
+      onChange={(e, data) => { onChange(data.checked); }}
     />
   </Form.Field>
 );
@@ -73,12 +101,13 @@ class FlightsCreationForm extends React.Component {
             results={this.props.cities}
           />
         </Form.Group>
-        <Form.Group widths="equal">
+        <Form.Group>
           <Field
             required
             component={renderField}
             id="code"
             name="code"
+            width="4"
             label="Code"
           />
           <Field
@@ -86,6 +115,7 @@ class FlightsCreationForm extends React.Component {
             component={renderField}
             id="departure"
             name="departure"
+            width="4"
             type="time"
             label="Departure"
           />
@@ -94,6 +124,7 @@ class FlightsCreationForm extends React.Component {
             component={renderField}
             id="duration"
             name="duration"
+            width="3"
             min="1"
             type="number"
             label="Duration"
@@ -103,9 +134,19 @@ class FlightsCreationForm extends React.Component {
             component={renderField}
             id="cost"
             name="cost"
+            width="3"
             min="1"
             type="number"
             label="Cost"
+          />
+          <Field
+            component={renderCheckbox}
+            id="active"
+            name="active"
+            width="3"
+            value="0"
+            type="checkbox"
+            label="Active"
           />
         </Form.Group>
         <Form.Group>

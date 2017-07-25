@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import axios from 'axios';
 import { createAction } from 'redux-actions';
 
@@ -29,10 +30,10 @@ export function createFlight(values) {
         dispatch(flightCreationSuccess(response.data.data));
       })
       .catch((error) => {
-        console.error(error);
-        if (error.response) {
-          console.log(error.response);
-          dispatch(flightCreationError(error.response.error));
+        if (_.has(error, ['response', 'data', 'error'])) {
+          dispatch(flightCreationError(error.response.data.error));
+        } else {
+          console.error(error);
         }
       });
   };

@@ -1,7 +1,8 @@
 import { handleActions } from 'redux-actions';
 
 const flights = handleActions({
-  FLIGHTS_LOADING: () => ({
+  FLIGHTS_LOADING: state => ({
+    ...state,
     isFetching: true,
   }),
 

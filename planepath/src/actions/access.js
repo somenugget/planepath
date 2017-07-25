@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import axios from 'axios';
 import { createAction } from 'redux-actions';
 
@@ -15,7 +16,11 @@ export function checkAccess(token, role) {
     })
       .then(response => dispatch(accessGranted(response.data.data)))
       .catch((error) => {
-        dispatch(accessDenied(error.response.data.error));
+        if (_.has(error, ['response', 'data', 'error'])) {
+          dispatch(accessDenied(error.response.data.error));
+        } else {
+          console.error(error);
+        }
       });
   };
 }

@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'lodash';
 import { connect } from 'react-redux';
 import { Grid, Divider } from 'semantic-ui-react';
 import Loading from './Loading';
@@ -21,7 +22,7 @@ class Flights extends React.Component {
       <div className="ui column">
         <FlightsCreation />
         <Divider />
-        <FlightsList flights={this.props.flights.items} />
+        <FlightsList flights={this.props.flights} />
       </div>
     );
   }
@@ -29,14 +30,19 @@ class Flights extends React.Component {
   render() {
     return (
       <Grid container>
-        {(this.props.flights.isFetching) ? <Loading /> : this.renderFlights()}
+        {(this.props.isFetching) ? <Loading /> : this.renderFlights()}
       </Grid>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  flights: state.flights,
+  isFetching: state.flights.isFetching,
+  flights: state.flights.items.map(flight => ({
+    ...flight,
+    from: _.find(state.cities.items, { id: flight.from_id }),
+    to: _.find(state.cities.items, { id: flight.to_id }),
+  })),
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({

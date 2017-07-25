@@ -30,6 +30,7 @@ const mapDispatchToProps = () => ({
       departure: values.departure,
       duration: values.duration,
       cost: values.cost,
+      active: values.active,
       token: props.user.token,
     }));
   },
