@@ -11,6 +11,17 @@ const flights = handleActions({
     isFetching: false,
   }),
 
+  FLIGHT_UPDATE_SUCCESS: (state, action) => ({
+    ...state,
+    items: state.items.map((flight) => {
+      if (flight.id === action.payload.flight.id) {
+        return action.payload.flight;
+      }
+
+      return flight;
+    }),
+  }),
+
 }, { isFetching: false, items: [] });
 
 export default flights;

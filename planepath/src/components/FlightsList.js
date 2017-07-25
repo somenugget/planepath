@@ -2,7 +2,7 @@ import React from 'react';
 import { Table, Button, Checkbox } from 'semantic-ui-react';
 
 
-const FlightsList = ({ flights }) => {
+const FlightsList = ({ flights, updateFlight }) => {
   if (!flights.length) {
     return <h4>You have no flights added</h4>;
   }
@@ -32,7 +32,12 @@ const FlightsList = ({ flights }) => {
             <Table.Cell>{flight.departure}</Table.Cell>
             <Table.Cell>{flight.duration} min.</Table.Cell>
             <Table.Cell>{flight.cost} $</Table.Cell>
-            <Table.Cell><Checkbox checked={flight.active} /></Table.Cell>
+            <Table.Cell>
+              <Checkbox
+                checked={flight.active}
+                onChange={(e, data) => updateFlight(flight.id, { active: data.checked })}
+              />
+            </Table.Cell>
             <Table.Cell>
               <Button.Group>
                 <Button color="green">Edit</Button>

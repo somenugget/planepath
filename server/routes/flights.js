@@ -6,7 +6,7 @@ router.get('/', function (req, res) {
   const filter = JSON.parse(req.query.filter);
 
   queryFilter = filter.user_id ? {creator_id: filter.user_id} : {};
-  models.Flight.findAll({ where: queryFilter }).then((flights) => {
+  models.Flight.findAll({ where: queryFilter, order: [['id', 'DESC']] }).then((flights) => {
     res.json({
       data: flights,
     });
@@ -14,7 +14,7 @@ router.get('/', function (req, res) {
 });
 
 router.post('/', function (req, res) {
-  models.User.findOne({ token: req.body.token }).then((user) => {
+  models.User.findOne({ where: { token: req.body.token }}).then((user) => {
     if (user) {
       models.Flight.create({
         from_id: req.body.from_id,
@@ -32,6 +32,25 @@ router.post('/', function (req, res) {
       }).catch((error) => {
         console.log(error);
         res.status(422).send({ error });
+      });
+    } else {
+      res.status(401).send({error: 'Wrong user token!'});
+    }
+  });
+});
+
+router.put('/:id', function (req, res) {
+  models.User.findOne({ where: { token: req.body.token }}).then((user) => {
+    if (user) {
+      models.Flight.findById(req.params.id).then(flight => {
+        flight.update(req.body).then((flight) => {
+          res.json({
+            data: flight,
+          });
+        }).catch((error) => {
+          console.log(error);
+          res.status(422).send({ error });
+        });
       });
     } else {
       res.status(401).send({error: 'Wrong user token!'});

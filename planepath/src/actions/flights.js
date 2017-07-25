@@ -38,3 +38,29 @@ export function createFlight(values) {
       });
   };
 }
+
+export const flightUpdateStart = createAction('FLIGHT_UPDATE_START');
+export const flightUpdateSuccess = createAction('FLIGHT_UPDATE_SUCCESS', flight => ({ flight }));
+export const flightUpdateError = createAction('FLIGHT_UPDATE_ERROR', error => ({ error }));
+
+export function updateFlight(flightId, token, values) {
+  return (dispatch) => {
+    dispatch(flightUpdateStart());
+
+    axios
+      .put(`/flights/${flightId}`, {
+        ...values,
+        token,
+      })
+      .then((response) => {
+        dispatch(flightUpdateSuccess(response.data.data));
+      })
+      .catch((error) => {
+        if (_.has(error, ['response', 'data', 'error'])) {
+          dispatch(flightCreationError(error.response.data.error));
+        } else {
+          console.error(error);
+        }
+      });
+  };
+}
