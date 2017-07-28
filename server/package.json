@@ -12,7 +12,10 @@
     "sequelize": "^4.4.0",
     "sequelize-cli": "^2.7.0"
   },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  },
   "scripts": {
-    "start": "node index.js"
+    "start": "nodemon index.js"
   }
 }

@@ -5,11 +5,11 @@ import { createAction } from 'redux-actions';
 export const flightsLoading = createAction('FLIGHTS_LOADING');
 export const flightsLoaded = createAction('FLIGHTS_LOADED', items => ({ items }));
 
-export function loadFlights(userId) {
+export function loadFlights(user) {
   return (dispatch) => {
     dispatch(flightsLoading());
 
-    axios.get('/flights', { params: { filter: { user_id: userId } } }, { headers: { 'Content-Type': 'application/json' } })
+    axios.get('/flights', { params: { token: user.token } }, { headers: { 'Content-Type': 'application/json' } })
       .then((response) => {
         dispatch(flightsLoaded(response.data.data));
       });
@@ -25,7 +25,7 @@ export function createFlight(values) {
     dispatch(flightCreationStart());
 
     axios
-      .post('/flights', values)
+      .post(`/flights?token=${values.token}`, values)
       .then((response) => {
         dispatch(flightCreationSuccess(response.data.data));
       })
@@ -51,7 +51,7 @@ export function updateFlight(flightId, values) {
     dispatch(flightUpdateStart());
 
     axios
-      .put(`/flights/${flightId}`, values)
+      .put(`/flights/${flightId}?token=${values.token}`, values)
       .then((response) => {
         dispatch(flightUpdateSuccess(response.data.data));
       })

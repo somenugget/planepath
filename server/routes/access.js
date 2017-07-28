@@ -2,10 +2,10 @@ const express = require('express');
 const router = express.Router();
 const models = require('../models');
 
-router.get('/:token', function (req, res) {
-  const token = req.params.token;
+router.get('/', (req, res) => {
+  const token  = req.query.token;
   const filter = JSON.parse(req.query.filter);
-  const role = filter.role;
+  const role   = filter.role;
 
   if (token && role) {
     models.User.findOne({where: {token, role}}).then((user) => {

@@ -99,7 +99,7 @@ class FlightForm extends React.Component {
             <Button type="submit" color={updatingFlight ? 'green' : 'blue'}>
               {updatingFlight ? 'Update' : 'Create'}
             </Button>
-            {updatingFlight ? <Button onClick={unsetUpdatingFlight}>Cancel</Button> : null}
+            {updatingFlight ? <Button onClick={unsetUpdatingFlight}>Back</Button> : null}
           </Form.Field>
           <Form.Field width="12">
             {this.props.anyTouched && renderFirstError(errors)}

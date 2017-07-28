@@ -14,7 +14,9 @@ class Flights extends React.Component {
   }
 
   componentWillMount() {
-    this.props.loadFlights();
+    if (!this.props.isFetching) {
+      this.props.loadFlights();
+    }
   }
 
   renderFlights() {
@@ -50,7 +52,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  loadFlights: () => dispatch(loadFlights(ownProps.user.id)),
+  loadFlights: () => dispatch(loadFlights(ownProps.user)),
   updateFlight: (flightId, values) => {
     dispatch(updateFlight(flightId, { ...values, token: ownProps.user.token }));
   },
