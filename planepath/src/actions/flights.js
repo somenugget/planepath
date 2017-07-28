@@ -25,7 +25,7 @@ export function createFlight(values) {
     dispatch(flightCreationStart());
 
     axios
-      .post(`/flights?token=${values.token}`, values)
+      .post('/flights', values)
       .then((response) => {
         dispatch(flightCreationSuccess(response.data.data));
       })
@@ -51,7 +51,7 @@ export function updateFlight(flightId, values) {
     dispatch(flightUpdateStart());
 
     axios
-      .put(`/flights/${flightId}?token=${values.token}`, values)
+      .put(`/flights/${flightId}`, values)
       .then((response) => {
         dispatch(flightUpdateSuccess(response.data.data));
       })

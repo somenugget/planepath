@@ -1,3 +1,5 @@
+import _ from 'lodash';
+import axios from 'axios';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -33,6 +35,22 @@ const store = createStore(
     applyMiddleware(thunkMiddleware, userStorageMiddleware),
   ),
 );
+
+axios.interceptors.request.use((config) => {
+  const state = store.getState();
+
+  if (_.has(state, ['user', 'user', 'token'])) {
+    return {
+      ...config,
+      params: {
+        ...config.params,
+        token: state.user.user.token,
+      },
+    };
+  }
+
+  return config;
+});
 
 store.dispatch(fetchCities());
 

@@ -10,7 +10,7 @@ export function checkAccess(token, role) {
   return (dispatch) => {
     dispatch(checkAccessStart());
 
-    axios.get(`/access?token=${token}`, {
+    axios.get('/access', {
       params: { filter: { role } },
       headers: { 'Content-Type': 'application/json' },
     })

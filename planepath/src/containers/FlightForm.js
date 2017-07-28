@@ -41,7 +41,6 @@ const mapDispatchToProps = dispatch => ({
       duration: values.duration,
       cost: values.cost,
       active: values.active,
-      token: props.user.token,
     };
 
     if (props.updatingFlight) {
