@@ -64,3 +64,29 @@ export function updateFlight(flightId, values) {
       });
   };
 }
+
+export const setRemovingFlight = createAction('SET_REMOVING_FLIGHT', flightId => ({ flightId }));
+export const unsetRemovingFlight = createAction('UNSET_REMOVING_FLIGHT');
+
+export const flightRemoveStart = createAction('FLIGHT_REMOVE_START');
+export const flightRemoveSuccess = createAction('FLIGHT_REMOVE_SUCCESS', flightId => ({ flightId }));
+export const flightRemoveError = createAction('FLIGHT_REMOVE_ERROR');
+
+export function removeFlight(flightId) {
+  return (dispatch) => {
+    dispatch(flightRemoveStart());
+
+    axios
+      .delete(`/flights/${flightId}`)
+      .then(() => {
+        dispatch(flightRemoveSuccess(flightId));
+      })
+      .catch((error) => {
+        if (_.has(error, ['response', 'data', 'error'])) {
+          dispatch(flightRemoveError(error.response.data.error));
+        } else {
+          console.error(error);
+        }
+      });
+  };
+}

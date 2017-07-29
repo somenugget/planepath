@@ -47,4 +47,19 @@ router.put('/:id', (req, res) => {
   });
 });
 
+router.delete('/:id', (req, res) => {
+  const user = res.locals.user;
+
+  models.Flight.findById(req.params.id).then(flight => {
+    flight.destroy().then((flight) => {
+      res.json({
+        data: true,
+      });
+    }).catch((error) => {
+      console.log(error);
+      res.status(422).send({ error });
+    });
+  });
+});
+
 module.exports = router;

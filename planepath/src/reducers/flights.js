@@ -38,6 +38,22 @@ const flights = handleActions({
     updatingFlight: null,
   }),
 
-}, { isFetching: false, updatingFlight: null, items: [] });
+  SET_REMOVING_FLIGHT: (state, action) => ({
+    ...state,
+    removingFlight: action.payload.flightId,
+  }),
+
+  UNSET_REMOVING_FLIGHT: state => ({
+    ...state,
+    removingFlight: null,
+  }),
+
+  FLIGHT_REMOVE_SUCCESS: (state, action) => ({
+    ...state,
+    removingFlight: null,
+    items: state.items.filter(flight => flight.id !== action.payload.flightId),
+  }),
+
+}, { isFetching: false, updatingFlight: null, removingFlight: null, items: [] });
 
 export default flights;
