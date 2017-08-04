@@ -1,6 +1,6 @@
-import { Search } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { setCityAndFindTrips } from '../actions/city';
+import CityInput from '../components/CityInput';
 
 const mapStateToProps = state => ({
   loading: state.cities.isFetching,
@@ -13,9 +13,7 @@ const mapDispatchToProps = (dispatch, props) => ({
   },
 });
 
-const CityInput = connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(Search);
-
-export default CityInput;
+)(CityInput);

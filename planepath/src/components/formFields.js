@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import React from 'react';
-import { Form, Search, Checkbox } from 'semantic-ui-react';
+import { Form, Checkbox } from 'semantic-ui-react';
+import CityInput from './CityInput';
 
 export const renderField = ({
   meta: { touched, error },
@@ -63,7 +64,7 @@ export const renderSelect = ({
   return (
     <Form.Field required={required} error={touched && !!error}>
       <label htmlFor={id}>{label}</label>
-      <Search
+      <CityInput
         id={id}
         results={results}
         name={name}
