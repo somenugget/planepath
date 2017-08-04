@@ -1,4 +1,6 @@
 $background: #fcfeff;
+$table-header-background: #f9fafb;
+$table-header-border: 1px solid rgba(34, 36, 38, .1);
 
 body {
   background-color: $background;
@@ -14,4 +16,19 @@ body {
       border-radius: .28571429rem;
     }
   }
+
+  .table {
+    tbody {
+      .trip-part-header {
+        background: $table-header-background;
+        font-weight: bolder;
+
+        td {
+          border-bottom: $table-header-border;
+          border-top: $table-header-border;
+        }
+      }
+    }
+  }
 };
+

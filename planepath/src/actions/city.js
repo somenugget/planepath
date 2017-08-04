@@ -13,7 +13,7 @@ export function setCityAndFindTrips(direction, city) {
     dispatch(setCity(direction, city));
     const cityState = getState().city;
 
-    if (cityState.from && cityState.to) {
+    if (cityState.from && cityState.to && cityState.from.id !== cityState.to.id) {
       return findTrips(cityState.from.id, cityState.to.id, dispatch);
     }
 
