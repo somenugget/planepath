@@ -1,10 +1,10 @@
 import React from 'react';
 import { Table } from 'semantic-ui-react';
 
-const getTripCities = (flights) => {
-  const cities = flights.map(flight => flight.from);
-  cities.push(flights[flights.length - 1].to);
-  return cities.join(' -> ');
+const getTripCities = (trip) => {
+  return trip.map(path => (
+    `${path.from} -> ${path.to}`
+  ));
 };
 
 const TripsList = ({ trips }) => {
@@ -16,16 +16,14 @@ const TripsList = ({ trips }) => {
     <Table celled padded>
       <Table.Header>
         <Table.Row>
-          <Table.HeaderCell>Trip id</Table.HeaderCell>
           <Table.HeaderCell>Flights</Table.HeaderCell>
         </Table.Row>
       </Table.Header>
       <Table.Body>
         {trips.map(trip => (
-          <Table.Row key={trip.id}>
-            <Table.Cell>{trip.id}</Table.Cell>
+          <Table.Row key={`${trip.from}_${trip.to}`}>
             <Table.Cell>
-              {getTripCities(trip.flights)}
+              {getTripCities(trip)}
             </Table.Cell>
           </Table.Row>
         ))}

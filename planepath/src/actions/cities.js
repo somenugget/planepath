@@ -1,17 +1,7 @@
-export function requestCities() {
-  return {
-    type: 'REQUEST_CITIES',
-    isFetching: true,
-  };
-}
+import { createAction } from 'redux-actions';
 
-export function receiveCities(json) {
-  return {
-    type: 'RECEIVE_CITIES',
-    isFetching: false,
-    items: json.data,
-  };
-}
+export const requestCities = createAction('REQUEST_CITIES');
+export const receiveCities = createAction('RECEIVE_CITIES', json => ({ ...json }));
 
 export function fetchCities() {
   return (dispatch) => {

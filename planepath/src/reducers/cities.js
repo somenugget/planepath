@@ -1,22 +1,18 @@
-const cities = (state = {
+import { handleActions } from 'redux-actions';
+
+export const initialState = {
   isFetching: false,
   items: [],
-}, action) => {
-  switch (action.type) {
-    case 'REQUEST_CITIES':
-      return {
-        ...state,
-        isFetching: true,
-      };
-    case 'RECEIVE_CITIES':
-      return {
-        ...state,
-        isFetching: false,
-        items: action.items,
-      };
-    default:
-      return state;
-  }
 };
 
-export default cities;
+export default handleActions({
+  REQUEST_CITIES: state => ({
+    ...state,
+    isFetching: true,
+  }),
+  RECEIVE_CITIES: (state, action) => ({
+    ...state,
+    isFetching: false,
+    items: action.payload.data,
+  }),
+}, initialState);

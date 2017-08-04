@@ -3,16 +3,16 @@ const trips = (state = {
   items: [],
 }, action) => {
   switch (action.type) {
-    case 'REQUEST_TRIPS':
+    case 'TRIPS_LOADING':
       return {
         ...state,
         isFetching: true,
       };
-    case 'RECEIVE_TRIPS':
+    case 'TRIPS_LOADED':
       return {
         ...state,
         isFetching: false,
-        items: action.items,
+        items: action.payload.items,
       };
     default:
       return state;

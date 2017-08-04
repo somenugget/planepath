@@ -1,22 +1,12 @@
-export function requestTrips() {
-  return {
-    type: 'REQUEST_TRIPS',
-    isFetching: true,
-  };
-}
+import axios from 'axios';
+import { createAction } from 'redux-actions';
 
-export function receiveTrips(json) {
-  return {
-    type: 'RECEIVE_TRIPS',
-    isFetching: false,
-    items: json.data,
-  };
-}
+export const tripsLoading = createAction('TRIPS_LOADING');
+export const tripsLoaded = createAction('TRIPS_LOADED', items => ({ items }));
 
 export function findTrips(fromId, toId, dispatch) {
-  dispatch(requestTrips());
+  dispatch(tripsLoading());
 
-  return fetch(`/trips/${fromId}/${toId}`)
-    .then(response => response.json())
-    .then(json => dispatch(receiveTrips(json)));
+  return axios.get(`/trips/${fromId}/${toId}`)
+    .then(response => dispatch(tripsLoaded(response.data.data)));
 }
